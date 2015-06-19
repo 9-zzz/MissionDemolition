@@ -13,10 +13,14 @@ public class FollowCam : MonoBehaviour
     public GameObject poi;    //point of interest
     public float camZ;        //desired z position of the camera
 
+    void Awake()
+    {
+        S = this;
+    }
+
     // Use this for initialization
     void Start()
     {
-        S = this;
         camZ = this.transform.position.z;
     }
 
@@ -33,7 +37,7 @@ public class FollowCam : MonoBehaviour
             destination = poi.transform.position;
             if (poi.tag == "Projectile")
             {
-                if (poi.rigidbody.IsSleeping())
+                if (poi.GetComponent<Rigidbody>().IsSleeping())
                 {
                     poi = null;
                     return;
@@ -45,6 +49,6 @@ public class FollowCam : MonoBehaviour
         destination = Vector3.Lerp(transform.position, destination, easing);
         destination.z = camZ;
         transform.position = destination;
-        this.camera.orthographicSize = destination.y + 10;
+        this.GetComponent<Camera>().orthographicSize = destination.y + 10;
     }
 }
