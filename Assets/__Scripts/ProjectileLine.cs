@@ -15,6 +15,7 @@ public class ProjectileLine : MonoBehaviour {
 	private GameObject    _poi;
 	public List<Vector3>  points;
 	public GameObject	  sshotGO;	
+	public FollowCam FollowCam;	
 
 
 	void Awake(){
@@ -23,12 +24,13 @@ public class ProjectileLine : MonoBehaviour {
 		line.enabled = false;
 		points = new List<Vector3>();
 		sshotGO =GameObject.Find("SlingShot");
+        FollowCam = GameObject.Find("_Main Camera").GetComponent<FollowCam>();
 
 
-	}
+    }
 
 
-	public GameObject poi {
+    public GameObject poi {
 		get {
 			return _poi;
 		}
@@ -109,7 +111,7 @@ public class ProjectileLine : MonoBehaviour {
 		// if we get here, there must be a poi
 		AddPoint ();
 
-		if(poi.rigidbody.IsSleeping()) {
+		if(poi.GetComponent<Rigidbody>().IsSleeping()) {
 			//if projectile is no longer moving
 			poi = null;
 		}
